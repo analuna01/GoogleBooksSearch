@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const booksAPI = require("./public/routes/api-routes");
+const path = require("path");
+const mongoose = require("mongoose");
+// const booksAPI = require("./public/routes/api-routes");
 
 
 // ----------------------- Set up Mongoose ---------------------------
@@ -28,14 +29,14 @@ app.use(
     }));
 
 // ---------------------- Set up PORT & Routes-------------------------
-app.use("/app", booksAPI);
+// app.use("/app", booksAPI);
 
 const PORT = process.env.PORT || 3001;
 
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './client/build/index.html'));
+    res.sendFile(path.join(__dirname, './client/index.html'));
 });
 
 app.listen(PORT, () => {
