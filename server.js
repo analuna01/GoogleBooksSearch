@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
-// const booksAPI = require("./public/routes/api-routes");
 
 
 // ----------------------- Set up Mongoose ---------------------------
@@ -29,9 +28,10 @@ app.use(
     }));
 
 // ---------------------- Set up PORT & Routes-------------------------
-// app.use("/app", booksAPI);
 
 const PORT = process.env.PORT || 3001;
+
+require("./public/routes/api-routes");
 
 // Send every other request to the React app
 // Define any API routes before this runs
