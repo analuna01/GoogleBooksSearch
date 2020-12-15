@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
+const routes = require("./public/routes");
+
+app.use(express.json());
 
 
 // ----------------------- Set up Mongoose ---------------------------
@@ -31,7 +34,9 @@ app.use(
 
 const PORT = process.env.PORT || 3001;
 
-require("./public/routes/api-routes");
+// require("./public/routes/api-routes")(app);
+app.use(routes);
+
 
 // Send every other request to the React app
 // Define any API routes before this runs

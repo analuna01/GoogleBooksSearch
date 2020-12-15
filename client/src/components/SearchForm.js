@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SaveButton from "./SaveButton";
 
 function SearchForm() {
 
@@ -18,6 +17,7 @@ function SearchForm() {
     };
   
     function handleSubmit(event) {
+        console.log("handling submit");
       event.preventDefault();
   
       axios.get("https://www.googleapis.com/books/v1/volumes?q=" + book + "&key=" + apiKey)
@@ -26,11 +26,31 @@ function SearchForm() {
         })
   
     };
+
+    function handleSave(event) {
+        event.preventDefault();
+        console.log(event.target.id);
+        const index = event.target.id;
+        const newBook={
+            id: result[index].id,
+            title: result[index].volumeInfo.title,
+            authors: result[index].volumeInfo.authors[0],
+            description: result[index].volumeInfo.description,
+            image: result[index].volumeInfo.imageLinks.thumbnail,
+            link: result[index].volumeInfo.infoLink,
+
+        }
+    
+        axios.post("/api/book", newBook)
+          .then(data => {
+            console.log(data);
+          })
+      };
   
     return (
         <div className="jumbotron">
         <h1 className="display-2 text-center"> Google Books Search</h1>
-        <form onSubmit={handleSubmit}>
+        <form >
           <div className="form-group">
             <input
   
@@ -44,13 +64,13 @@ function SearchForm() {
           </div>
         </form>
   
-        {result.map(book => (
-          <Table responsive key={book.uuid}>
+        {result.map((book, index) => (
+          <Table responsive key={book.id}>
             <tbody>
   
               <tr>
                 <td>
-                    <SaveButton/>
+                <Button id={index} variant="info" size="sm" onClick={handleSave}> Save Book </Button>
                   <h4>Title 
                   </h4>
                   {book.volumeInfo.title}
