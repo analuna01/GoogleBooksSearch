@@ -32,7 +32,10 @@ app.use(
 
 // ---------------------- Set up PORT & Routes-------------------------
 
-const PORT = process.env.PORT || 3001;
+// const PORT = process.env.PORT || 3001;
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+  }
 
 // require("./public/routes/api-routes")(app);
 app.use(routes);
