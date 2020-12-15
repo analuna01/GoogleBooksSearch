@@ -7,7 +7,8 @@ const app = express();
 // Set up Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/books",
 {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true 
 },
 () => {
     console.log("Mongoose is connected")
